@@ -2,7 +2,7 @@
 
 Based on [TryClojure](http://tryclj.com), built for the [Cambridge Software Craftsmanship](http://www.meetup.com/Cambridge-Software-Craftsmanship/) Clojure workshop.
 
-You can have a look at it in action [on heroku](http://clojure-workshop.herokuapp.com)
+You can have a look at it in action [on heroku](http://hajime.herokuapp.com)
 
 ## Usage
 
