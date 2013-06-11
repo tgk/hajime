@@ -23,7 +23,7 @@
   (sandbox try-clojure-tester
            :timeout 2000
            :init '(do (require '[clojure.repl :refer [doc source]])
-                      (future (Thread/sleep 600000)
+                      (future (Thread/sleep 10800000)
                               (-> *ns* .getName remove-ns)))))
 
 (defn find-sb [old]

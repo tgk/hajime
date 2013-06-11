@@ -13,6 +13,6 @@
    (or (to-port port)
        (to-port (System/getenv "PORT")) ;; For deploying to Heroku
        8801)
-   {:session-cookie-attrs {:max-age 600}}))
+   {:session-cookie-attrs {:max-age 12000}}))
 
 (defn -main [& args] (tryclj (first args)))
