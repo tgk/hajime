@@ -1,18 +1,15 @@
-# tryclojure
+# Hajime: Clojure Cloud IDE 
 
-TryClojure is a online Clojure REPL written using Noir and Chris Done's jquery console (you're awesome, Chris).
-
-[<img src="https://secure.travis-ci.org/Raynes/tryclojure.png"/>](http://travis-ci.org/Raynes/tryclojure)
+Based on [TryClojure](http://tryclj.com), built for the [Cambridge Software Craftsmanship](http://www.meetup.com/Cambridge-Software-Craftsmanship/) Clojure workshop.
 
 ## Usage
 
-http://tryclj.com
-
-If you want to run it, refer to https://github.com/Raynes/tryclojure/wiki/Running-Tryclojure
+Use [foreman](https://github.com/ddollar/foreman) or `lein run`
 
 ## Credits
 
 apgwoz: Design
+[Anthony Grimes (Raynes)](https://github.com/Raynes) Coding for tryclj.com
 
 ## License
 
