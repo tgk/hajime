@@ -17,3 +17,13 @@ apgwoz: Design
 ## License
 
 Licensed under the same thing Clojure is licensed under: the EPL, of which you can find a copy at the root of this directory.
+
+## Ideas
+  
+  * Use [Clojure Koans](https://github.com/functional-koans/clojure-koans) as base?
+  * Construct an app collaboratively? (zmq?)
+  * Straight tutorial?
+  * Mail results?
+  * Visual programming? 
+  * Game of life kata?
+  * Server hook for web dev?
