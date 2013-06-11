@@ -2,6 +2,8 @@
 
 Based on [TryClojure](http://tryclj.com), built for the [Cambridge Software Craftsmanship](http://www.meetup.com/Cambridge-Software-Craftsmanship/) Clojure workshop.
 
+You can have a look at it in action [on heroku](http://clojure-workshop.herokuapp.com)
+
 ## Usage
 
 Use [foreman](https://github.com/ddollar/foreman) or `lein run`
@@ -9,7 +11,8 @@ Use [foreman](https://github.com/ddollar/foreman) or `lein run`
 ## Credits
 
 apgwoz: Design
-[Anthony Grimes (Raynes)](https://github.com/Raynes) Coding for tryclj.com
+
+[Anthony Grimes (Raynes)](https://github.com/Raynes): Coding for tryclj.com
 
 ## License
 
