@@ -7,4 +7,4 @@
                  [de.ubercode.clostache/clostache "1.3.1"]]
 
   :jvm-opts ["-Djava.security.policy=example.policy""-Xmx80M"]
-  :main tryclojure.server)
+  :main hajime.server)
