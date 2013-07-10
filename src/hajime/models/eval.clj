@@ -20,7 +20,7 @@
   (conj secure-tester-without-def (blanket "hajime" "noir")))
 
 (defn make-sandbox []
-  (sandbox try-clojure-tester
+  (sandbox [] ; this is a ridiculously open sandbox... 
            :timeout 2000
            :init '(do (require '[clojure.repl :refer [doc source]])
                       (future (Thread/sleep 10800000)
