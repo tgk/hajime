@@ -1,15 +1,14 @@
 (ns hajime.models.execfile
-  (:require [clojail.testers :refer [secure-tester-without-def blanket]]
-            [clojail.core :refer [sandbox]]
-            [clojure.stacktrace :refer [root-cause]]
+  (:require [clojure.stacktrace :refer [root-cause]]
+            [hajime.models.sandbox :refer [find-sb exec-file]]
             [noir.session :as session])
-  (:import java.io.StringWriter
-	   java.util.concurrent.TimeoutException))
+  (:import java.util.concurrent.TimeoutException))
 
-(defn exec-str [sandbox str]
-  "returns a map: {:error 'description'} or {:success 'loaded file correctly'}"
-  (sandbox `(load-string ~str))
-;
-; (try (load-string ~str) (catch clojure.lang.Compiler$CompilerException er (. er line)))
-;
-(defn execfile [] nil)
+
+(defn eval-file [fstr]
+  (try
+    (exec-file fstr (get (session/swap! find-sb) "sb"))
+    (catch TimeoutException _
+      {:error true :message "Execution Timed Out!"})
+    (catch Exception e
+      {:error true :message (str (root-cause e)) :line (. e line)})))

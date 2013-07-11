@@ -1,35 +1,8 @@
 (ns hajime.models.eval
-  (:require [clojail.testers :refer [secure-tester-without-def blanket]]
-            [clojail.core :refer [sandbox]]
-            [clojure.stacktrace :refer [root-cause]]
+  (:require [clojure.stacktrace :refer [root-cause]]
+            [hajime.models.sandbox :refer [find-sb eval-string]]
             [noir.session :as session])
-  (:import java.io.StringWriter
-	   java.util.concurrent.TimeoutException))
-
-(defn eval-form [form sbox]
-  (with-open [out (StringWriter.)]
-    (let [result (sbox form {#'*out* out})]
-      {:expr form
-       :result [out result]})))
-
-(defn eval-string [expr sbox]
-  (let [form (binding [*read-eval* false] (read-string expr))]
-    (eval-form form sbox)))
-
-(def try-clojure-tester
-  (conj secure-tester-without-def (blanket "hajime" "noir")))
-
-(defn make-sandbox []
-  (sandbox [] ; this is a ridiculously open sandbox... 
-           :timeout 2000
-           :init '(do (require '[clojure.repl :refer [doc source]])
-                      (future (Thread/sleep 10800000)
-                              (-> *ns* .getName remove-ns)))))
-
-(defn find-sb [old]
-  (if-let [sb (get old "sb")]
-    old
-    (assoc old "sb" (make-sandbox))))
+  (:import java.util.concurrent.TimeoutException))
 
 (defn eval-request [expr]
   (try
