@@ -3,7 +3,7 @@
             [ring.middleware.file :refer [wrap-file]]))
 
 (server/add-middleware wrap-file (System/getProperty "user.dir"))
-(server/load-views "src/hajime/views")
+(server/load-views "src/hajime")
 
 (defn to-port [s]
   (when-let [port s] (Long. port)))
