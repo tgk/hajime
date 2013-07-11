@@ -1,7 +1,7 @@
 (ns hajime.models.sandbox
   (:require [clojail.testers :refer [secure-tester-without-def blanket]]
             [clojail.core :refer [sandbox]]
-            [clojure.stacktrace :refer [root-cause]]
+            [clojure.stacktrace :refer [root-cause print-cause-trace]]
             [noir.session :as session])
   (:import java.io.StringWriter
 	   java.util.concurrent.TimeoutException))
@@ -31,9 +31,13 @@
   (let [form (binding [*read-eval* false] (read-string expr))]
     (eval-form form sbox)))
 
-(defn exec-file [sandbox str]
+(defn eval-multi-str [str sandbox]
   "returns a map: {:error 'description'} or {:success 'loaded file correctly'}"
-  (sandbox `(load-string ~str)))
+  (try
+    (sandbox `(load-string ~str))
+    (catch Exception e 
+      (throw e)))
+  {:success 1})
 
 ; (try 
 ;   (load-string ~str) 

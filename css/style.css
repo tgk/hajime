@@ -20,7 +20,24 @@ html, body{
   height:5px;
   background:#000;
 }
-
+#menu{
+  position:absolute;
+  top:0px;
+  right:0px;
+  text-align:right;
+  padding-top:15px;
+  padding-right:30px;
+  z-index:9999;
+}
+#menu a {
+  font-weight:bold;
+  background-color:#555;
+  color:white;
+  text-decoration:none;
+  padding:3px;
+  margin:5px;
+  border-radius: 5px;
+}
 #container {
   width:100%;
   height:100%;

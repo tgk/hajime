@@ -1,4 +1,4 @@
-(ns tryclojure.eval-test
+(ns hajime.eval_test
   (:use tryclojure.models.eval
         clojure.test)
   (:require noir.session))

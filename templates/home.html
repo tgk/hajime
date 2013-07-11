@@ -31,10 +31,6 @@
       }); 
     });
     
-    /*
-     * Resize panes on window resize
-     */
-    //pass
 
     /*
      * Set up editor
@@ -53,19 +49,38 @@
       $("#editor").resize(function() { 
         editor.resize();
       });  
-    });
-   
-    $().ready(function(){
+
       $(window).resize(function() { 
         $("#container").trigger("resize")
       });  
-        //$("#container").trigger("resize");
+      
+      function savefile(){
+        result = load_str(editor.getValue());
+        if(result.success){
+          $("#menu-save").css('background-color', 'green'); 
+          $("#menu-save").text("Saved");
+        }else{
+          $("#menu-save").css('background-color', 'red'); 
+          $("#menu-save").text("Error");
+          console.log(result);
+          
+        }
+      }
+      $("#menu-save").click(function(){
+        savefile(); 
+      });
     });
+
+
     </script>
     <title>Clojure Workshop</title>
   </head>
   
   <body>
+      <div id="menu">
+<!--        <a id="menu-about" href="#">About</a> -->
+        <a id="menu-save" href="#">Save file</a>
+     </div>
       <div id="container">
         <div class="tutorial" id="tutorial">this is a very long sentence! this is a very long sentence! this is a very long sentence!</div>
         <div id="rightpane">

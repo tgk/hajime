@@ -3,14 +3,13 @@
             [hajime.models.execfile :refer [eval-file]]
             [noir.response :as resp]))
 
-(defpage "/execfile.json" {:keys [expr jsonp]}
-  (let [{:keys [expr result error message] :as res} (eval-file expr)
-        data (if error
-               res
-               (let [[out res] result]
-                 {:expr (pr-str expr)
-                  :result (str out (pr-str res))}))]
-    
+  
+(defpage [:post "/execfile.json"] {:keys [expr jsonp]}
+  (if expr
+    (let [{:keys [error message line success] :as result} (eval-file expr)]
+      (if jsonp
+        (resp/jsonp jsonp result)
+        (resp/json result)))
     (if jsonp
-      (resp/jsonp jsonp data)
-      (resp/json data))))
+      (resp/jsonp jsonp {:error true :message "No expression sent!"} )
+      (resp/json {:error true :message "No expression sent!"}))))
