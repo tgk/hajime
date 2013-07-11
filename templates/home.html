@@ -20,11 +20,13 @@
      * Set up the resizable panes
      */
     $().ready(function() {
+      /*
       $("#container").splitter({
         splitVertical: true,
         sizeLeft:true,
         outline:false,
       });
+      */
       $("#rightpane").splitter({
         splitHorizontal:true,
         sizeTop:true
@@ -55,19 +57,32 @@
       });  
       
       function savefile(){
+        $("#menu-save").css('background-color', 'yellow'); 
+        $("#menu-save").text("Saving");
         result = load_str(editor.getValue());
         if(result.success){
           $("#menu-save").css('background-color', 'green'); 
           $("#menu-save").text("Saved");
+          $("#errormsg").fadeOut(500);
+
         }else{
           $("#menu-save").css('background-color', 'red'); 
           $("#menu-save").text("Error");
           console.log(result);
+          $("#errormsg").text(result.message);
+          $("#errormsg").show();
           
         }
       }
       $("#menu-save").click(function(){
         savefile(); 
+      });
+      $("#console").focusin(function(){
+        savefile();
+      });
+      editor.on("change", function(){
+        $("#menu-save").css('background-color', 'grey'); 
+        $("#menu-save").text("Modified");
       });
     });
 
@@ -78,18 +93,15 @@
   
   <body>
       <div id="menu">
-<!--        <a id="menu-about" href="#">About</a> -->
+        <span id="errormsg"></span>
         <a id="menu-save" href="#">Save file</a>
      </div>
-      <div id="container">
-        <div class="tutorial" id="tutorial">this is a very long sentence! this is a very long sentence! this is a very long sentence!</div>
         <div id="rightpane">
           <div class="editor" id="editor">
 (defn hello [name] 
-    (println (format "Hello, %s!" name)))</div>
+    (println (format "Hello, %s!" name)))(</div>
           <div class="console" id="console"></div>
         </div>
-      </div>
   </body>
 
 </html>
