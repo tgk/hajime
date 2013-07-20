@@ -38,6 +38,7 @@
      */
     $().ready(function() {
       var editor = ace.edit("editor");
+      window.mainEditor = editor;
       editor.setTheme("ace/theme/clouds_midnight");
       editor.setHighlightActiveLine(false);
       
@@ -83,6 +84,7 @@
         $("#menu-save").css('background-color', 'grey'); 
         $("#menu-save").text("Modified");
       });
+      editor.savefile = savefile;
     });
     </script>
     <script src="/js/tutorial.js" type="text/javascript"></script>

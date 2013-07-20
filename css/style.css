@@ -133,10 +133,19 @@ float:right;
 .code{
   margin-top:10px;
   margin-bottom:10px;
-  background:red;
-  min-height:50px;
 }
 .ace_scrollbar {
     display: none !important;
 }
-.ace_hidden-cursors {opacity:0} 
+.ace_hidden-cursors {opacity:0}
+.loadlink{
+  float:right;
+  font-size:small;
+  text-decoration:underline;
+  cursor:pointer;
+  color:grey;
+} 
+.loadlink:hover{
+  color:white;
+}
+.clear{clear:both;}

@@ -72,7 +72,11 @@ $(function(){
   /* Prettifies the any code class inside the tutorial by wrapping it in an ace editor*/
   function prettifyCode(){
     $.each( $("#tutorial").find(".code"), function(){
-      var myeditor = ace.edit(this);
+      var ae = $('<div>').addClass("codeshow").text($(this).text());
+      $(this).empty();
+      $(this).append(ae);
+      var myeditor = ace.edit(ae.get(0));
+     
       myeditor.setTheme("ace/theme/solarized_light");
       myeditor.setHighlightActiveLine(false);
       myeditor.setReadOnly(true);
@@ -80,8 +84,15 @@ $(function(){
       myeditor.getSession().setMode("ace/mode/clojure");
       myeditor.getSession().setTabSize(2);
       myeditor.getSession().setUseSoftTabs(true);
-      this.style.fontSize='16px';
-      heightUpdateFunction(this, myeditor);
+      ae.css('fontSize', '16px');
+      heightUpdateFunction(ae, myeditor);
+      var link = $('<a>').addClass('loadlink').text("add to session").click(function(){
+        var session = window.mainEditor.getSession()
+        session.insert({row:session.getLength()}, "\n\n"+myeditor.getValue());
+        window.mainEditor.savefile(); 
+      });
+      $(this).append(link);
+      $(this).append($('<div>').addClass('clear'));
       
     });
   }
