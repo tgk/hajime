@@ -6,3 +6,4 @@ classes
 .lein-deps-sum
 .lein-failures
 target
+_site
