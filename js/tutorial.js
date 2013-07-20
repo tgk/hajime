@@ -62,7 +62,7 @@ $(function(){
      function heightUpdateFunction(elem, editor) {
         var newHeight =
                   editor.getSession().getScreenLength()
-                  * (editor.renderer.lineHeight+2)
+                  * editor.renderer.lineHeight
                   + editor.renderer.scrollBar.getWidth();
         $(elem).height(newHeight.toString() + "px");
         editor.resize();
