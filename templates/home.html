@@ -21,13 +21,11 @@
      * Set up the resizable panes
      */
     $().ready(function() {
-      /*
       $("#container").splitter({
         splitVertical: true,
         sizeLeft:true,
         outline:false,
       });
-      */
       $("#rightpane").splitter({
         splitHorizontal:true,
         sizeTop:true
@@ -54,7 +52,7 @@
       });  
 
       $(window).resize(function() { 
-        $("#rightpane").trigger("resize")
+        $("#container").trigger("resize")
       });  
       
       function savefile(){
@@ -85,14 +83,9 @@
         $("#menu-save").css('background-color', 'grey'); 
         $("#menu-save").text("Modified");
       });
-
-
-      
-
     });
-
-
     </script>
+    <script src="/js/tutorial.js" type="text/javascript"></script>
     <title>Clojure Workshop</title>
   </head>
   
@@ -101,12 +94,21 @@
         <span id="errormsg"></span>
         <a id="menu-save" href="#">Save file</a>
      </div>
+     <div id="container">
+        <div id="tutorialPane">
+          <div id="tutorial">
+            <p>Hello tutorial!</p>
+          </div>
+          <a id="prev" class="navbut">&lArr;</a>
+          <a id="next" class="navbut">&rArr;</a>
+        </div>
         <div id="rightpane">
           <div class="editor" id="editor">
 (defn hello [name] 
     (println (format "Hello, %s!" name)))</div>
           <div class="console" id="console"></div>
         </div>
+      </div>
   </body>
 
 </html>
