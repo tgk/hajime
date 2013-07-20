@@ -149,3 +149,11 @@ float:right;
   color:white;
 }
 .clear{clear:both;}
+#tutorial code{
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+  background-color:#444;/* rgb(75,3,75); */
+  font-family: 
+  padding:2px;
+  padding-bottom:4px;
+  border-radius:2px;
+}
