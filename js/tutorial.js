@@ -73,7 +73,7 @@ $(function(){
   function prettifyCode(){
     $.each( $("#tutorial").find(".code"), function(){
       var myeditor = ace.edit(this);
-      myeditor.setTheme("ace/theme/clouds_midnight");
+      myeditor.setTheme("ace/theme/solarized_light");
       myeditor.setHighlightActiveLine(false);
       myeditor.setReadOnly(true);
       myeditor.renderer.setShowGutter(false);

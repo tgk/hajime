@@ -131,7 +131,6 @@ float:right;
   background-color:green;
 }
 .code{
-  border:1px solid white;
   margin-top:10px;
   margin-bottom:10px;
   background:red;
@@ -140,3 +139,4 @@ float:right;
 .ace_scrollbar {
     display: none !important;
 }
+.ace_hidden-cursors {opacity:0} 
