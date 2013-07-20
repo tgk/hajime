@@ -131,7 +131,7 @@ float:right;
   background-color:green;
 }
 .code{
-  margin-top:10px;
+  margin-top:20px;
   margin-bottom:10px;
 }
 .ace_scrollbar {
@@ -153,7 +153,23 @@ float:right;
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
   background-color:#444;/* rgb(75,3,75); */
   font-family: 
-  padding:2px;
+  padding-top:2px;
+  padding-left:3px;
+  padding-right:3px;
   padding-bottom:4px;
   border-radius:2px;
+}
+#tutorial h1{
+  text-align:center;
+  margin-bottom:20px;
+}
+#tutorial a{
+  color:#abcdef;
+}
+#tutorial p{
+  margin-top:10px;
+  margin-bottom:10px;
+}
+#tutorial em{
+  color:#abcdef;
 }
