@@ -1,3 +1,5 @@
+@import url(http://fonts.googleapis.com/css?family=Armata);
+@import url(http://fonts.googleapis.com/css?family=Droid+Serif);
 
 * { 
  box-sizing: border-box;
@@ -47,12 +49,14 @@ html, body{
   border: 5px solid #000;
 }
 #tutorialPane{
-  min-width:400px;
+  font-family: 'Armata', sans-serif;
+  min-width:500px;
   max-width:800px;
   color:#f4ffff;
   background: #161616;
   overflow:auto;
   padding:20px;
+  font-size:110%;
 }
 #rightpane{
   width:100%;
@@ -140,7 +144,7 @@ float:right;
 .ace_scrollbar {
     display: none !important;
 }
-.ace_hidden-cursors {opacity:0}
+.ace_hidden-cursors {opacity:0;}
 .loadlink{
   float:right;
   font-size:small;
@@ -155,11 +159,14 @@ float:right;
 #tutorial code{
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
   background-color:#444;/* rgb(75,3,75); */
-  padding-top:2px;
-  padding-left:3px;
-  padding-right:3px;
-  padding-bottom:4px;
+  padding-top:1px;
+  padding-left:2px;
+  padding-right:2px;
+  padding-bottom:3px;
   border-radius:2px;
+}
+#tutorial h1,h2,h3,h4{
+  font-family: 'Droid Serif', serif;
 }
 #tutorial h1{
   text-align:center;

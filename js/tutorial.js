@@ -77,14 +77,14 @@ $(function(){
       $(this).append(ae);
       var myeditor = ace.edit(ae.get(0));
      
-      myeditor.setTheme("ace/theme/solarized_light");
+      myeditor.setTheme("ace/theme/crimson_editor");
       myeditor.setHighlightActiveLine(false);
       myeditor.setReadOnly(true);
       myeditor.renderer.setShowGutter(false);
       myeditor.getSession().setMode("ace/mode/clojure");
       myeditor.getSession().setTabSize(2);
       myeditor.getSession().setUseSoftTabs(true);
-      ae.css('fontSize', '16px');
+      ae.css('fontSize', '20px');
       heightUpdateFunction(ae, myeditor);
       var link = $('<a>').addClass('loadlink').text("add to session").click(function(){
         var session = window.mainEditor.getSession()
