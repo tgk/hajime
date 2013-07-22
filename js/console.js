@@ -33,19 +33,34 @@ function onValidate(input) {
     return (input != "");
 }
 
+function matchCommand(input){
+  switch(input){
+    case "(reset)": 
+      return function(){
+        controller.reset();
+      }
+  }
+}
+
 function onHandle(line, report) {
     var input = $.trim(line);
+    
+    commandCB = matchCommand(input);
+  
+    if (commandCB){
+      return commandCB();
+    }else{
+      // perform evaluation
+      var data = eval_clojure(input);
 
-    // perform evaluation
-    var data = eval_clojure(input);
+      // handle error
+      if (data.error) {
+          return [{msg: data.message, className: "jquery-console-message-error"}];
+      }
 
-    // handle error
-    if (data.error) {
-        return [{msg: data.message, className: "jquery-console-message-error"}];
+      // display expr results
+      return [{msg: data.result, className: "jquery-console-message-value"}];
     }
-
-    // display expr results
-    return [{msg: data.result, className: "jquery-console-message-value"}];
 }
 
 /**
