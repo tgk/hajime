@@ -45,7 +45,7 @@
     (catch TimeoutException _
       {:error true :message "Execution Timed Out!"})
     (catch Exception e
-      (print-stack-trace e)
+      ;(print-stack-trace e) ; we might want this for debugging
       {:error true :message (str (root-cause e))})))
 
 (defn eval-file [fstr]
