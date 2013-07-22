@@ -1,8 +1,28 @@
 (ns hajime.server
   (:require [noir.server :as server]
-            [ring.middleware.file :refer [wrap-file]]))
+            [ring.middleware.file :refer [wrap-file]]
+            [ring.util.response :refer [file-response content-type]]
+            [ring.util.codec :refer [url-decode]])
+  (:use [clojure.string]))
+
+(defn request-css? [req]
+  (re-find #"\.css" (:uri req)))
+
+(defn reply-css [req root-path] 
+  (let [path (.substring (url-decode (:uri req)) 1)]
+    (content-type 
+      (file-response path {:root root-path :index-files? true})
+      "text/css")))
+
+(defn css-mime-mdlwr [app root-path]
+  (fn [req]
+    (if (request-css? req)
+      (reply-css req root-path)
+      (app req))))
+
 
 (server/add-middleware wrap-file (System/getProperty "user.dir"))
+(server/add-middleware css-mime-mdlwr (System/getProperty "user.dir"))
 (server/load-views "src/hajime")
 
 (defn to-port [s]
