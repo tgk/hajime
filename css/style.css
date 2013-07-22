@@ -1,5 +1,8 @@
 
-* { box-sizing: border-box;}
+* { 
+ box-sizing: border-box;
+ -moz-box-sizing: border-box;
+ -webkit-box-sizing: border-box;}
 
 body,html,div,p,h1,h2,h3,h4 {
   padding:0px;
@@ -68,7 +71,7 @@ html, body{
 }
 #console {
 
-//  background: #0e1628;
+/*  background: #0e1628; */
   background: #161616;
   color:#f4ffff;
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
@@ -152,7 +155,6 @@ float:right;
 #tutorial code{
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
   background-color:#444;/* rgb(75,3,75); */
-  font-family: 
   padding-top:2px;
   padding-left:3px;
   padding-right:3px;
