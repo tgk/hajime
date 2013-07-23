@@ -1,51 +1,73 @@
-<h1>An introduction to Clojure</h1>
+<h1>0. An introduction to Clojure</h1>
 
 <p>
 Welcome to the Clojure workshop of Cambridge Software Craftsmanship's Seven Language in Seven Workshops Series.
 </p>
 
-Let me give you the short summary of what we'll do here today. 
+<h2>What this workshop is about</h2>
 
-the aim of this workshop i to introduce you to clojure and let you walk away with a better idea about some of the key concepts behind the language. 
+<p>The aim of this workshop is to introduce you to Clojure. I hope that you'll walk away understanding a little bit more about what Clojure is, and having learnt some of the key concept of the language. I also hope that you'll know where to find more information and how Clojure could fit in your toolbox.</p>
 
-The aim is not to teach you clojure. The aim is not to teach you how to set up an environment.
+<p>The aim is <em>not</em> to teach you clojure. </p>
+<p>The aim is <em>not</em> to help you set up a clojure environment. </p>
+<p>The aim is <em>not</em> to introduce the tooling or the ecosystem around Clojure. </p>
 
-All this can be done with the tons of online resources: 
- * http://vimeo.com/channels/fulldisclojure/
- * http://www.youtube.com/user/clojuretv
- * 
-
-The aim is to let you walk away with a better understanding of what CLojure is, where to get more information, and understand where clojure fits into your toolbox.
-
-It might not even be a friendly first language. Not because the languge is complex, but The tooling and infrastructure and ecosystem are still young and evolving incredibly rapidly. (very, very fast) 
-
-Things that are true of clojure but that I won't mention:
- * It's dynamic. If you didnt get that by the end of today, I've done somethuing wrong.
- * It has to be compiled to bytecode.
- * Lazy sequences
- * immutable data by default and persistent collections
- * 
-
-Clojure is one of the reason why the JVM is still rlevant today and why it has a future.
-
-I'm mostly parroting cleverer people here. I'm still very much a novice and had recent occasion to code alongside a clojure developer. It was pretty humbling.
+<p>These are all worthy and interesting things, but we'll not be discussing them at all in this session. There are lots of great resource to do this online and in print. At the end of this workshop, we'll provide you with a series of links to further resources that will cover these topics.</p>
 
 
+<h2>Clojure?</h2>
+
+<p><a href="http://clojure.org">Clojure</a> is a 6 year old Lisp for the JVM, it's powerful, expressive and opinionated. It is the brainchild of <a href="http://en.wikipedia.org/wiki/Rich_Hickey">Rich Hickey</a> with contributions from many others. While the core language is stable and small, the tooling and ecosystem are still rapidly evolving. </p>
+
+<p>So why am I giving this workshop? Because clojure is <em>fun!</em> </p>
+
+<p>I'm still very much a novice programmer in general, an even more so with Clojure, but I've never enjoyed programming more with another language. So I wanted to share. Most of the interesting examples and explanations in this workshop are mostly me <s>shamelessly stealing from</s> being inspired by cleverer and more experienced people. </p>
+
+<p>I will note here that clojure tooling is not particularly newbie friendly compared to other languages. This observation is in general true of Clojure. A lot of the design choices where made to make the life of an experienced developer easy, rather than a new programmer. In my opinion, Clojure is not a good first language, perhaps even not a good second language. I've tried to reduce friction as much as possible by building this environment, but some of the complexity may leak through. It's worthwhile to note that the difficulties with starting are more than repaid when you start throwing real problems at the language.</p>
+
+<h2>Workshop?</h2>
+
+<p>This workshop is divided into two major sections. In the first half we'll talk about some of the key features of Lisp, and show how they're implemented in Clojure and what it means for the language. In the second, we'll talk about some key features of Clojure, and how they can make your life easier when dealing with real world problems.</p>
+
+<p>The entire thing <em>should</em> take us about two hours. I have no idea what will actually happen when we run through it :)</p>
 
 
-<h2>What makes Lisp Lisp</h2>
-<h3>Historical Detour</h3>
-Second oldest programming language still in use. (FORTRAN is the other if you're wodering which is really computers in the human sense. calculators, really)
-Built on a really difefrent base. FORTRAN is really a langauge for a vin neumann compute
+<h1>1. What makes Lisp Lisp</h1>
+<h2>Historical Detour</h2>
+
+<p>I'm actually going to start with a historical detour, first because it's interesting, but also because it's relevant and will illuminate some of the key aspects of Lisp and functional programming in general.</p>
+
+<p>The entire thing actually starts in the 1600s with mathematicians who wore outrageous wigs. But to keep things brief, we'll start our story in 1928 when <a href="http://en.wikipedia.org/wiki/David_Hilbert">David Hilbert</a> poses the 'Entscheidungsproblem'. It asks, according to wikipedia "... whether a given statement is provable from the axioms using the rules of logic".</p>
+
+<p>This is pretty heady stuff! At this point we're really still at the blurry edge where Mathematics and Philosophy rub elbows, and two mathematicians are about to lay down the foundation to the craft of programming.</p>
+
+<p>To even begin to answer the problem, the notion of 'algorithm' has to be formally defined, and in 1936 both <a href="http://en.wikipedia.org/wiki/Alonzo_Church">Alonzo Church</a> and <a href="http://en.wikipedia.org/wiki/Alan_Turing">Alan Turing</a> independently come up with their own answers to the problem.</p>
+
+<p>Turing's answer is based on what quickly becomes known as 'the Turing machine'. A relatively simple construct that is still capable of describing any possible computation. </p>
+
+<p>Church's answer is much more mathematical, and relies on a formal system he creates for the purpose. This system is Lambda calculus. Lambda calculus is also general, but instead of dealing with the mutation of a tape in a machine it deals with the composition of functions.</p>
+
+<p>We now have two equivalent models of computation, driven by two incredibly talented mathematicians, both at Princeton. The future of computation hangs in the balance and could go either way. </p> 
+
+<p>But fate intervenes. Nazi germany invades Poland, and war breaks out in Europe.</p>
+
+<p>Turing returns to England to work on code breaking. From his efforts and the work of Von Neumann, the modern computer is born in a bid to break German codes. The ideas of Turing, and the manner in which computation is carried out, is now the default manner in which computers are reasoned about and programmed.</p>
+
+<p>Almost twenty years pass before lambda calculus returns to our story. In 1958, <a href="http://en.wikipedia.org/wiki/John_McCarthy_(computer_scientist)">John McCarthy</a> writes a theoretical paper on the computation of recursive function. <a href="https://en.wikipedia.org/wiki/Steve_Russell">Steve Russell</a> reads the paper and realises that the 'eval' function can be implemented in machine code. This is the first Lisp interpreter. </p>
+
+<p>There are now two high level languages available to programmers: Fortran which embodies the ideas of Turing, and Lisp, which embodies those of Church.</p>
+
+<p>Today, we can still observe the legacy of these two models of computation in the languages we use. A direct thread connects the ideas of Turing to C, and then OOP as examplified in C# and Java. </p>
+
 You can still see the legacy of the turing machine and the VN computer in today's languages. there's a direct link between these and modern languages like Java or C#, but lisp is a 
 different beast entirely. 
 stems from a different approach to understanding computation (understanding computation book) by John McCarthy in 1958. Some weird abstract paper that the author had relegated to the theory pile (studying computation)
 Steve russell (who was a grad student at the time iirc, reads the paper and goes "Yeah... I can build eval" and does so in machien code. That was the first lisp interpreter. It's interesting to note that Steve Russel also wrote Spaecwars! the first computer game worthy of the name. 
 So lisp is Basically executable lambda calculus.
 
-<h3>Lisp is homoiconic (or, OMG Parentheses!)</h3>
-Homoicowhat?
+<h3>1.1. OMG Parentheses!</h3>
 Ok, so the first thing that you'll notice is the weird-ass syntax of the language. I have to mention it first, or it will feel really jarring.
+This is because Lisp is homoiconic. Homoicowhat? 
 
 http://clojuredocs.org/
 
@@ -80,9 +102,11 @@ real example:  vector, list,
 <h3>Lisp is functional</h3>
 Impure
 What do I mean by functional:
-first order function
+first class function
  - function as arguments 
  - functions as return value
+"Concerns and facilitates the application and composition of functions"
+
 for example, an if statement in another language becomes an if Expression that has a value. It returns something. this makes it much more composable
 
 But really, it's about statelessness :
@@ -90,7 +114,16 @@ recursion instead of side-effect looping
 Avoids state and mutable data.
 statelessness
 
+there's lots of other topics in this: purity, immutability, recursion, laziness, referential transparency
+
+OO is domain as set of nouns
+FP is domain as composition of verbs
+
 function definiton, lambdas higher order map, reduce, filter (we saw how to implement those in the haskell workshop, and the code translates remarkably well. to give an idea, here's how map is actually implemented: 
+
+immutability: flipbook vs draw+erase example
+
+Flipbook inneficient -> okasaki functional datastructures
 
 Side effects are useful, but functional style isolates rather than eliminate state changes.
 
@@ -175,8 +208,8 @@ REAL EXAMPLE:
   ([x form & more] `(->> (->> ~x ~form) ~@more)))
 
 
-<h2>What makes Clojure Clojure</h2>
-<h3>On the JVM tight with Java</h3>
+<h2>2. What makes Clojure Clojure</h2>
+<h3>2.1. On the JVM tight with Java</h3>
 Tigth Java interop
 both clojure2java but also java2clojure
 
@@ -202,7 +235,7 @@ both clojure2java but also java2clojure
 (new java.util.Timer false)
 
 
-<h3>Concurrent programming and STM</h3>
+<h3>2.2. Built for concurrency</h3>
 
 http://www.infoq.com/presentations/Concurrency-Clojure
 
@@ -274,9 +307,29 @@ What we haven't mentioned:
  * namespaces
  * metadata
  * 
+ <h2>Further Resources</h2>
+ <h3>Videos</h3>
 http://www.youtube.com/watch?v=Aoeav_T1ARU
-https://github.com/functional-koans/clojure-koans
+ * http://vimeo.com/channels/fulldisclojure/
+ * http://www.youtube.com/user/clojuretv
+ http://rubymanor.org/3/videos/programming_with_nothing/ tom stuart lambda calculus
+ <h3>Tutorials and excercises</h3>
 http://java.ociweb.com/mark/clojure/article.html#Intro
+https://github.com/functional-koans/clojure-koans
 http://www.4clojure.com/problems
+ <h3>Books</h3>
+ The joy of clojure
+ programming clojure
+ Clojure programming
+ On Lisp
+ Functional Datastructures
+ Understanding Computation
+ The Annotated Turing
+ SCIP
+ <h3>Resources</h3>
 Test frameworks exist: clojure.test Midje
+
+
+<h2>Credits</h2>
+
 
