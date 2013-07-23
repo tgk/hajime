@@ -47,7 +47,7 @@ Welcome to the Clojure workshop of Cambridge Software Craftsmanship's Seven Lang
 
 <p>Church's answer is much more mathematical, and relies on a formal system he creates for the purpose. This system is Lambda calculus. Lambda calculus is also general, but instead of dealing with the mutation of a tape in a machine it deals with the composition of functions.</p>
 
-<p>We now have two equivalent models of computation, driven by two incredibly talented mathematicians, both at Princeton. The future of computation hangs in the balance and could go either way. </p> 
+<p>We then had two equivalent models of computation, driven by two incredibly talented mathematicians, both at Princeton. The future of computation hung in the balance and could go either way. </p> 
 
 <p>But fate intervenes. Nazi germany invades Poland, and war breaks out in Europe.</p>
 
@@ -57,81 +57,209 @@ Welcome to the Clojure workshop of Cambridge Software Craftsmanship's Seven Lang
 
 <p>There are now two high level languages available to programmers: Fortran which embodies the ideas of Turing, and Lisp, which embodies those of Church.</p>
 
-<p>Today, we can still observe the legacy of these two models of computation in the languages we use. A direct thread connects the ideas of Turing to C, and then OOP as examplified in C# and Java. </p>
+<p>Today, we can still observe the legacy of these two models of computation in the languages we use. For example, a direct thread connects the ideas of Turing to C, and then onto OOP as examplified in C# and Java. </p>
 
-You can still see the legacy of the turing machine and the VN computer in today's languages. there's a direct link between these and modern languages like Java or C#, but lisp is a 
-different beast entirely. 
-stems from a different approach to understanding computation (understanding computation book) by John McCarthy in 1958. Some weird abstract paper that the author had relegated to the theory pile (studying computation)
-Steve russell (who was a grad student at the time iirc, reads the paper and goes "Yeah... I can build eval" and does so in machien code. That was the first lisp interpreter. It's interesting to note that Steve Russel also wrote Spaecwars! the first computer game worthy of the name. 
-So lisp is Basically executable lambda calculus.
+<p>Similarly, the ideas of lambda calculus are evident in Lisp and functional languages. If you want to better understand this, there is a <a href="http://codon.com/programming-with-nothing">great talk</a> by Tom Stuart that uses Ruby to explore lambda calculus.</p>
 
-<h3>1.1. OMG Parentheses!</h3>
-Ok, so the first thing that you'll notice is the weird-ass syntax of the language. I have to mention it first, or it will feel really jarring.
-This is because Lisp is homoiconic. Homoicowhat? 
+<p>In essence, Lisp stems from a different place than most other programming languages, and is based on a radically different model of computation. It is interesting to note that as machines have grown more powerful and languages have evolved, they have moved slowly closer to Lisp and further away from the Turing paradigm. This is a long running trend, starting with conditionals (yes, that's right) being introduced into Algol by McCarthy from Lisp. Other features that have slowly migrated into mainstream languages and we now take for granted but had their beginnings in Lisp are first order functions, recursion and garbage collection!</p>
 
-http://clojuredocs.org/
 
-IF, cond, let
+<h2>1.1. OMG Parentheses!</h2>
+<p>The first thing that any programmer notices when seeing Lisp code for the first time is the radically different syntax. All those parentheses are rather jarring to people used to syntax inspired by C.</p>
 
-example: 
- - (println "foo")
- - (35/61)
- - arbitrary numbers
- - list vector map () [] {}
 
-; This is Clojure code.
-; When a set is used as a function, it returns the argument if it is
-; in the set and nil otherwise.  When used in a boolean context,
-; that indicates whether the argument is in the set.
-(def vowel? (set "aeiou"))
+<h3>Basic Syntax</h3>
+<p>We'll start slow and finish by talking a bit more about what the strange syntax gives us.</p>
 
-(defn pig-latin [word] ; defines a function
-  ; word is expected to be a string
-  ; which can be treated like a sequence of characters.
-  (let [first-letter (first word)] ; assigns a local binding
-    (if (vowel? first-letter)
-      (str word "ay") ; then part of if
-      (str (subs word 1) first-letter "ay")))) ; else part of if
+<p>Let's start by adding doing some basic math. Try to type <code>(+ 3 3)</code> in the REPL.</p>
 
-(println (pig-latin "red"))
-(println (pig-latin "orange"))
+<p>This should return the expected answer. </p>
 
-Excercise: try stuff out
-real example:  vector, list, 
+<p>Let's try a few more things:</p>
+
+<ul>
+  <li><code>(/ 10 3)</code></li>
+  <li><code>(+ 1 2 3 4 5 6)</code></li>
+  <li><code>(println "Hello, World!")</code></li>
+  <li><code>(format "Hello, %s!" "bob")</code></li>
+  <li><code>(if (< 3 2) "My value if true" "my value if false")</code></li>
+  <li><code>(list 1 2 3 4 5 6)</code></li>
+  <li><code>'(1 2 3 4 5 6)</code></li>
+</ul>
+
+<h3>Datastructures</h3>
+<p>We also have rich data structures, like maps. Maps are quite interesting, since they can be used like functions for lookup. For example this is how we define a map:</p>
+
+<pre class="code">{"first-key" "first-value" 
+"second-key" "second-value"}</pre>
+
+<p>Maps are a little more powerful than in other languages</p>
+
+<pre class="code">({:a 1 :b 2} :a)</pre>
+
+<p> We're also introducing keywords above. 
+ Keywords follow the same syntax rules 
+ as symbols, but start with a colon. 
+ They're more efficient than either symbols
+ or string when used for comparison and lookup</p>
+
+<div class="code">; keywords can also be used for lookup.
+(:a {:a 1 :b 2})
+
+; but there's a more traditional syntax too
+(get {:a 1 :b 2} :a)</div>
+
+<p>Data structures are actually much Richer! Have a look at <a href="http://clojure.org/data_structures">the documentation</a>, which goes through this in much more details.</p>
+
+<h3>Defining Functions</h3>
+<p>Defining functions is easy!<p>
+
+<pre class="code">(defn square [x]
+  (* x x))</pre>
+
+<p>Should be obvious how to define your own.</p>
+
+<h3>Excercise: Fibonacci numbers</h3>
+<p>For our first excercise, we'll tackle the classic Fibonacci numbers. We'll eventually return to this problem and make our approach much more efficient without changing our code. But first, we will solve it without worrying about efficiency.</p>
+
+<p>The mathematical definition of Fibonacci numbers is as follows:</p>
+
+<p>F<sub>n</sub>=F<sub>n-1</sub>+F<sub>n-2</sub></p>
+
+<p>With seed values F<sub>0</sub>=0 and F<sub>1</sub>=1</p>
+
+<p>You must complete the function below by replacing '_' with the appropriate form:</p>
+
+<div class="code">(defn fib [n]
+  _)</div>
+
+<p>You can use the following to test your solution:</p>
+
+<div class="code">(def fib-tests `[
+  (1 1)
+  (2 1)
+  (12 144)
+  (13 233)
+  (25 75025)
+])
+
+(defn is-fib? [func]
+  "Does my argument behave as we expect the fibonacci function to?"
+  (let [tests fib-tests
+       got (map func (map first tests))
+       expected (map second tests)
+       same (map #(= (first %) (second %)) (map vector got expected))]
+    (every? identity same)))</div>
+
+<p>Which you can use by running <code>(is-fib? fib)</code>.</p>
+
+<h3>Solution: Fibonacci numbers</h3>
+<div class="code">(defn fib [n]
+  (if (<= n 1)
+    n
+    (+ (fib (dec n)) (fib (- n 2)))))
+</div>
+
+
+
+
+
+
+
+
 
 <h3>Lisp is functional</h3>
-Impure
-What do I mean by functional:
-first class function
- - function as arguments 
- - functions as return value
-"Concerns and facilitates the application and composition of functions"
+<p>What is functional?</p>
 
-for example, an if statement in another language becomes an if Expression that has a value. It returns something. this makes it much more composable
+<blockquote>Concerns and facilitates the application and composition of functions<br /><small>Fogus & Houser, The Joy of Clojure</small></blockquote>
 
-But really, it's about statelessness :
-recursion instead of side-effect looping
-Avoids state and mutable data.
-statelessness
+<p>In particular, functions should be first class oblects that can be passed as arguments to a function and returned from a function.<p>
 
-there's lots of other topics in this: purity, immutability, recursion, laziness, referential transparency
+<p>We've actually already seen this, when we tested the Fibonacci function, the test took an arbitrary function as input and checked that it behaved the way we expect the fibonacci function to behave.</p>
 
-OO is domain as set of nouns
-FP is domain as composition of verbs
+<p>So why is this important?</p>
 
-function definiton, lambdas higher order map, reduce, filter (we saw how to implement those in the haskell workshop, and the code translates remarkably well. to give an idea, here's how map is actually implemented: 
+<p>Side effects are useful. In fact, they're usually why we run programs in the first place. However, they are difficult to reason about. For example, a function call in C or Java could do all sorts of things to the memory/object. If the function is incorrect, we may only find out about it much later, making debugging much harder.<p>
 
+<p>Writing functional code does not eliminate statefulness and state changes, but isolates and constrains them to make the program easier to reason about.</p>
+
+<p>for example, an if <em>statement</em> in another language becomes an if <em>expression</em> that has returns a value. This makes the language much more composable. We can now use an if expression as an argument to a function!</p>
+
+<p>Really, this is an exercise in minimising mutable state. Clojure's collections are very good at this, and there is a lot of clever things going on below the covers to make immutable state efficient. </p> 
+
+<p>Clojure itself is pragmatic about side effects. It provides the tools to write functional code, but is not dogmatic. It simply makes the functional style the default and most natural way to write programs.</p>
+
+<p>For example, it makes recursion the natural way to express algorithms, rather than side-effect base loopings, and provides a nice syntax for anonymous functions.</p>
+
+<!-- Flipbook example
 immutability: flipbook vs draw+erase example
+Flipbook inneficient -> okasaki functional datastructures -->
 
-Flipbook inneficient -> okasaki functional datastructures
+<!--there's lots of other topics in this: purity, immutability, recursion, laziness, referential transparency-->
 
-Side effects are useful, but functional style isolates rather than eliminate state changes.
+<!--OO is domain as set of nouns
+FP is domain as composition of verbs-->
 
-convention based mark for purity: 'foo! vs foo'
+<p>For example, functions in Clojure are anonymous by default, and <code>defn</code> is just syntactic sugar which does the same as:</p>
 
-interleave, take, repeat, cycle functions on collections
+<div class="code">(def name (fn [args] body))</div>
 
-example: data filtering with additional complication introduce the ->> and -> oper in clojure
+<p>Thiss is where we can start to see the roots of Lisp in Lambda Calculus.</p>
+
+<p>We also have a clean syntax to shorten function definitions even further:</p>
+
+<div class="code">#(...)</div>
+
+<p>This is in fact all you need to be 'Turing Complete' and the entire power of the language lies almost entirely in the ability to manipulate functions like this.</p>
+
+<p>On a more practical note, this syntax is really useful when using higher order functions. (Functions that take functions as arguments). For example, using map to square every number in a sequence:</p>
+
+<div class="code">(map #(* % %) [1 2 3 4 5 6])</div>
+
+<p>We looked at implementing these higher order functions in the Haskell workshop, and the code translates remarkably well. To give you an idea, here is a bare-bones implementation of map:</p> 
+
+<div class="code">(defn simple-map [f coll] 
+  (cons 
+    (f (first coll)) 
+    (map f (rest coll)))</code>
+
+<p>This doesn't handle all edge cases, however. Modify it to handle at least empty lists. </p>
+
+<h3>Lazy Collections</h3>
+<p>Clojure also uses lazy collections. This means that the values in the colection are only evaluated when needed. For example, try running <code>(repeat 3)</code> in the repl. What happens?</p>
+
+<p>Now try running <code>(take 5 (repeat 3))</code>. </p>
+
+<p>There are other functions that work with lazy collections:</p>
+
+<ul>
+  <li>interleave</li>
+  <li>repeat</li>
+  <li>cycle</li>
+</ul>
+
+<p>You can have a look at the collection API for more.</p>
+
+<!--example: data filtering with additional complication introduce the ->> and -> oper in clojure-->
+
+<h3>Excercise: Standard Deviation</h3>
+<p>With what we have learnt so far, we should have enough to implement a function that calculates the standard deviation of a list of numbers. You can use <a href="http://clojuredocs.org/quickref/Clojure%20Core">this reference sheet</a> to explore the clojure functions you might need. The standard deviation is defined as:</p>
+
+<blockquote>Root of the Average of the square differences from the mean</blockquote>
+
+<h3>Solution: Standard Deviation</h3>
+
+<div class="code">
+(defn std-dev [samples]
+  (let [n (count samples)
+        mean (/ (reduce + samples) n)
+        intermediate (map #(Math/pow (- %1 mean) 2) samples)]
+    (Math/sqrt 
+    (/ (reduce + intermediate) n))))
+</div>
+
+<h3>Excercise: FizzBuzz</h3>
+
 excercise: FIZZBUZZ++
 real example: ring middleware
 
@@ -327,6 +455,7 @@ http://www.4clojure.com/problems
  The Annotated Turing
  SCIP
  <h3>Resources</h3>
+http://clojuredocs.org/
 Test frameworks exist: clojure.test Midje
 
 
