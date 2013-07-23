@@ -2,8 +2,8 @@
   (:require [noir.server :as server]
             [ring.middleware.file :refer [wrap-file]]
             [ring.util.response :refer [file-response content-type]]
-            [ring.util.codec :refer [url-decode]])
-  (:use [clojure.string]))
+            [ring.util.codec :refer [url-decode]]
+            [clojure.string :as string]))
 
 (defn request-css? [req]
   (re-find #"\.css" (:uri req)))

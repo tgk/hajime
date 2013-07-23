@@ -1,7 +1,8 @@
 (ns hajime.views
   [:require [noir.core :refer [defpage]]
             [hajime.models :refer [eval-file eval-request]]
-            [noir.response :as resp]]
+            [noir.response :as resp]
+            [noir.session :as session]]
   [:use [clostache.parser]])
 
 
@@ -33,3 +34,8 @@
     (if jsonp
       (resp/jsonp jsonp {:error true :message "No expression sent!"} )
       (resp/json {:error true :message "No expression sent!"}))))
+
+(defpage [:post "/reset"] []
+  (session/clear!)
+  (resp/json {:success true}))
+  

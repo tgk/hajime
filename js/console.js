@@ -13,11 +13,11 @@ function query_sandbox(url, code) {
 
 
 function load_str(code) {
-  return query_sandbox("execfile.json", code)
+  return query_sandbox("execfile.json", code);
 }
 
 function eval_clojure(code) {
-  return query_sandbox("eval.json", code)
+  return query_sandbox("eval.json", code);
 }
 
 function html_escape(val) {
@@ -37,7 +37,9 @@ function matchCommand(input){
   switch(input){
     case "(reset)": 
       return function(){
+        query_sandbox("reset", null);
         controller.reset();
+        window.mainEditor.savefile();
       }
   }
 }

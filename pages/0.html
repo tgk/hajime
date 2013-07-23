@@ -1,8 +1,282 @@
-<h1>Welcome to Hajime</h1>
+<h1>An introduction to Clojure</h1>
+
+<p>
+Welcome to the Clojure workshop of Cambridge Software Craftsmanship's Seven Language in Seven Workshops Series.
+</p>
+
+Let me give you the short summary of what we'll do here today. 
+
+the aim of this workshop i to introduce you to clojure and let you walk away with a better idea about some of the key concepts behind the language. 
+
+The aim is not to teach you clojure. The aim is not to teach you how to set up an environment.
+
+All this can be done with the tons of online resources: 
+ * http://vimeo.com/channels/fulldisclojure/
+ * http://www.youtube.com/user/clojuretv
+ * 
+
+The aim is to let you walk away with a better understanding of what CLojure is, where to get more information, and understand where clojure fits into your toolbox.
+
+It might not even be a friendly first language. Not because the languge is complex, but The tooling and infrastructure and ecosystem are still young and evolving incredibly rapidly. (very, very fast) 
+
+Things that are true of clojure but that I won't mention:
+ * It's dynamic. If you didnt get that by the end of today, I've done somethuing wrong.
+ * It has to be compiled to bytecode.
+ * Lazy sequences
+ * immutable data by default and persistent collections
+ * 
+
+Clojure is one of the reason why the JVM is still rlevant today and why it has a future.
+
+I'm mostly parroting cleverer people here. I'm still very much a novice and had recent occasion to code alongside a clojure developer. It was pretty humbling.
 
 
-<p>Hajime is an online <a href="http://clojure.org/">Clojure</a> editor made for demonstrations and workshops. It's free and open source. The source is on <a href="https://github.com/bricef/hajime">Github</a>, and you can try an online version on <a href="http://hajime.herokuapp.com">Heroku</a>.</p>
 
-<p>You can navigate to the next page by clicking the green button below.<p>
 
+<h2>What makes Lisp Lisp</h2>
+<h3>Historical Detour</h3>
+Second oldest programming language still in use. (FORTRAN is the other if you're wodering which is really computers in the human sense. calculators, really)
+Built on a really difefrent base. FORTRAN is really a langauge for a vin neumann compute
+You can still see the legacy of the turing machine and the VN computer in today's languages. there's a direct link between these and modern languages like Java or C#, but lisp is a 
+different beast entirely. 
+stems from a different approach to understanding computation (understanding computation book) by John McCarthy in 1958. Some weird abstract paper that the author had relegated to the theory pile (studying computation)
+Steve russell (who was a grad student at the time iirc, reads the paper and goes "Yeah... I can build eval" and does so in machien code. That was the first lisp interpreter. It's interesting to note that Steve Russel also wrote Spaecwars! the first computer game worthy of the name. 
+So lisp is Basically executable lambda calculus.
+
+<h3>Lisp is homoiconic (or, OMG Parentheses!)</h3>
+Homoicowhat?
+Ok, so the first thing that you'll notice is the weird-ass syntax of the language. I have to mention it first, or it will feel really jarring.
+
+http://clojuredocs.org/
+
+IF, cond, let
+
+example: 
+ - (println "foo")
+ - (35/61)
+ - arbitrary numbers
+ - list vector map () [] {}
+
+; This is Clojure code.
+; When a set is used as a function, it returns the argument if it is
+; in the set and nil otherwise.  When used in a boolean context,
+; that indicates whether the argument is in the set.
+(def vowel? (set "aeiou"))
+
+(defn pig-latin [word] ; defines a function
+  ; word is expected to be a string
+  ; which can be treated like a sequence of characters.
+  (let [first-letter (first word)] ; assigns a local binding
+    (if (vowel? first-letter)
+      (str word "ay") ; then part of if
+      (str (subs word 1) first-letter "ay")))) ; else part of if
+
+(println (pig-latin "red"))
+(println (pig-latin "orange"))
+
+Excercise: try stuff out
+real example:  vector, list, 
+
+<h3>Lisp is functional</h3>
+Impure
+What do I mean by functional:
+first order function
+ - function as arguments 
+ - functions as return value
+for example, an if statement in another language becomes an if Expression that has a value. It returns something. this makes it much more composable
+
+But really, it's about statelessness :
+recursion instead of side-effect looping
+Avoids state and mutable data.
+statelessness
+
+function definiton, lambdas higher order map, reduce, filter (we saw how to implement those in the haskell workshop, and the code translates remarkably well. to give an idea, here's how map is actually implemented: 
+
+Side effects are useful, but functional style isolates rather than eliminate state changes.
+
+convention based mark for purity: 'foo! vs foo'
+
+interleave, take, repeat, cycle functions on collections
+
+example: data filtering with additional complication introduce the ->> and -> oper in clojure
+excercise: FIZZBUZZ++
+real example: ring middleware
+
+doall dorun doseq ( more advanced)
+
+<h3>Lisp has macros</h3>
+technically, this isn't neccessary, but it would be very strange for this not be in a lisp...
+
+It's a bit strange to introduce the topic so early. It would be like starting with the toughest bit, but this is just about planting the seed that will grow into something else. 
+
+Macros are code transformations.
+
+Since the syntax is s expr, macros actually take in a list representing the code and return a list representing the result.
+
+What macros are actually useful for is to add new constructs to the language. Unlike in other languages, if a feature is missing, you have the power to add it. 
+
+let's imagine we want to write an unless (this is a typical macro example)
+
+We could try writing 
+; this will fail
+(defn unless [condition form]
+  (if expr nil form))
+
+(unless false (prn "should print"))
+(unless true (prn "should not print"))
+
+Why is this going wrong? function arguments are evaluated. The lazyness of the sequences doesn't reach all this way.
+
+Macros do not evaluate their arguments the way functions do. instead, they transform their arguments, and you control the expression order.
+
+so, for unless
+
+(unless expr form) -> (if expr nil form)
+
+(defmacro unless [expr form]
+  (list 'if expr nil form))
+
+REAL EXAMPLE:
+
+
+(defmacro and
+  "Evaluates exprs one at a time, from left to right. If a form
+  returns logical false (nil or false), and returns that value and
+  doesn't evaluate any of the other expressions, otherwise it returns
+  the value of the last expr. (and) returns true."
+  {:added "1.0"}
+  ([] true)
+  ([x] x)
+  ([x & next]
+   `(let [and# ~x]
+      (if and# (and ~@next) and#))))
+
+(defmacro or
+  "Evaluates exprs one at a time, from left to right. If a form
+  returns a logical true value, or returns that value and doesn't
+  evaluate any of the other expressions, otherwise it returns the
+  value of the last expression. (or) returns nil."
+  {:added "1.0"}
+  ([] nil)
+  ([x] x)
+  ([x & next]
+      `(let [or# ~x]
+         (if or# or# (or ~@next)))))
+
+(defmacro ->>
+  "Threads the expr through the forms. Inserts x as the
+  last item in the first form, making a list of it if it is not a
+  list already. If there are more forms, inserts the first form as the
+  last item in second form, etc."
+  {:added "1.1"} 
+  ([x form] (if (seq? form)
+              (with-meta `(~(first form) ~@(next form)  ~x) (meta form))
+              (list form x)))
+  ([x form & more] `(->> (->> ~x ~form) ~@more)))
+
+
+<h2>What makes Clojure Clojure</h2>
+<h3>On the JVM tight with Java</h3>
+Tigth Java interop
+both clojure2java but also java2clojure
+
+(import '(java.util Calendar GregorianCalendar))
+(def calendar (new GregorianCalendar 2008 Calendar/APRIL 16)) ; April 16, 2008
+(def calendar (GregorianCalendar. 2008 Calendar/APRIL 16))
+(.add calendar Calendar/MONTH 2)
+(.get calendar Calendar/MONTH) ; -> 7
+
+
+(. (. calendar getTimeZone) getDisplayName) ; long way
+(.. calendar getTimeZone getDisplayName) ; -> "Central Standard Time"
+(->> calendar (.getTimeZone) (.getDisplay))
+(doto calendar
+  (.set Calendar/YEAR 1981)
+  (.set Calendar/MONTH Calendar/AUGUST)
+  (.set Calendar/DATE 1))
+
+(. Class method argument*)
+(. instance method argument*)
+
+(new  java.util.Date)
+(new java.util.Timer false)
+
+
+<h3>Concurrent programming and STM</h3>
+
+http://www.infoq.com/presentations/Concurrency-Clojure
+
+### Vars - like in others, thread isolated. but we'll skip over some of the intricacies.
+mutability within a thread. reference. 
+
+#### Refs -sharing state between threads in synchronous coordinated
+This is the STM you might have heard about. Essentially behind the scenes, clojure runs its memory like a git tree. (remember it's all immutable.)
+
+(Transaction with dosync )
+
+http://clojure.org/Refs
+
+#### Agents - states between threads in async, independent
+Agents Kick ass. it's a shame they don't make it in most tutorials.
+http://clojure.org/agents
+
+Clojure agents are basically magic.
+
+it reverses the usual idea. Agents in clojure wrap around value. You send functions to them. the value referenced by the agent gets updated by the function this is done atomically behind the scenes. guarantees consistent view.  The function can be anything. this is far most powerful than the usual agent syntax/systems, 
+
+(more advanced: validation fn, change listeners)
+
+the value can be accessed at any time by anyone, without cost, plays well with STM and dosync.
+
+#### Atoms - shared synchronous independent
+
+(atom foo)
+
+get the state with 
+
+(deref foo) or @foo
+
+ by using swap 
+
+A great example of atoms is the memoizing higher order function. 
+
+(defn memoize [f]
+  (let [mem (atom {})]
+    (fn [& args]
+      (if-let [e (find @mem args)]
+        (val e)
+        (let [ret (apply f args)]
+          (swap! mem assoc args ret)
+          ret)))))
+ 
+(defn fib [n]
+  (if (<= n 1)
+    n
+    (+ (fib (dec n)) (fib (- n 2)))))
+ 
+(time (fib 35))
+user=> "Elapsed time: 941.445 msecs"
+ 
+(def fib (memoize fib))
+ 
+(time (fib 35))
+ 
+user=> "Elapsed time: 0.044 msecs"
+
+<h3></h3>
+
+
+<h2>In CLosing</h2>
+
+What we haven't mentioned:
+ * clojure runs in your browser: clojurescript
+ * it runs on the CLR
+ * namespaces
+ * metadata
+ * 
+http://www.youtube.com/watch?v=Aoeav_T1ARU
+https://github.com/functional-koans/clojure-koans
+http://java.ociweb.com/mark/clojure/article.html#Intro
+http://www.4clojure.com/problems
+Test frameworks exist: clojure.test Midje
 
