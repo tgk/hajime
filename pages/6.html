@@ -1,0 +1,25 @@
+<h3>Datastructures</h3>
+<p>We also have rich data structures, like maps. Maps are quite interesting, since they can be used like functions for lookup. For example this is how we define a map:</p>
+
+<pre class="code">{"first-key" "first-value" 
+"second-key" "second-value"}</pre>
+
+<p>Maps are a little more powerful than in other languages</p>
+
+<pre class="code">({:a 1 :b 2} :a)</pre>
+
+<p> We're also introducing keywords above. 
+ Keywords follow the same syntax rules 
+ as symbols, but start with a colon. 
+ They're more efficient than either symbols
+ or string when used for comparison and lookup</p>
+
+<div class="code">; keywords can also be used for lookup.
+(:a {:a 1 :b 2})
+
+; but there's a more traditional syntax too
+(get {:a 1 :b 2} :a)</div>
+
+<p>Data structures are actually much Richer! Have a look at <a href="http://clojure.org/data_structures">the documentation</a>, which goes through this in much more details.</p>
+
+

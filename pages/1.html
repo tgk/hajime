@@ -1,18 +1,11 @@
-<h3>The editor and REPL</h3>
+<h2>Clojure?</h2>
 
-<p>On the right are the editor pane at the top and the REPL at the bottom. The REPL environment is automatically updated with the editor code.</p>
+<p><a href="http://clojure.org">Clojure</a> is a 6 year old Lisp for the JVM, it's powerful, expressive and opinionated. It is the brainchild of <a href="http://en.wikipedia.org/wiki/Rich_Hickey">Rich Hickey</a> with contributions from many others. While the core language is stable and small, the tooling and ecosystem are still rapidly evolving. </p>
 
-<p>For example, try running <code>(hello "bob")</code> in the REPL.</p>
+<p>So why am I giving this workshop? Because clojure is <em>fun!</em> </p>
 
-<p>The REPL is a fully featured Clojure REPL, with all features enabled. Try defining a goodbye function via the REPL.</p>
+<p>I'm still very much a novice programmer in general, an even more so with Clojure, but I've never enjoyed programming more with another language. So I wanted to share. Most of the interesting examples and explanations in this workshop are mostly me <s>shamelessly stealing from</s> being inspired by cleverer and more experienced people. </p>
 
-<p>To help learners it is also possible to add demo code into the editor directly from the tutorial. For example, try clicking on the <em>add to session</em> link beneath the following code.</p>
-
-
-<div class="code">(defn square [x] 
-  (* x x))</div>
-
-<p>You should now be immediately able to use <code>square</code> in the REPL.</p>
-
+<p>I will note here that clojure tooling is not particularly newbie friendly compared to other languages. This observation is in general true of Clojure. A lot of the design choices where made to make the life of an experienced developer easy, rather than a new programmer. In my opinion, Clojure is not a good first language, perhaps even not a good second language. I've tried to reduce friction as much as possible by building this environment, but some of the complexity may leak through. It's worthwhile to note that the difficulties with starting are more than repaid when you start throwing real problems at the language.</p>
 
 

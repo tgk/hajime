@@ -1,0 +1,34 @@
+
+<h3>Lisp is functional</h3>
+<p>What is functional?</p>
+
+<blockquote>Concerns and facilitates the application and composition of functions<br /><small>Fogus & Houser, The Joy of Clojure</small></blockquote>
+
+<p>In particular, functions should be first class oblects that can be passed as arguments to a function and returned from a function.<p>
+
+<p>We've actually already seen this, when we tested the Fibonacci function, the test took an arbitrary function as input and checked that it behaved the way we expect the fibonacci function to behave.</p>
+
+<p>So why is this important?</p>
+
+<p>Side effects are useful. In fact, they're usually why we run programs in the first place. However, they are difficult to reason about. For example, a function call in C or Java could do all sorts of things to the memory/object. If the function is incorrect, we may only find out about it much later, making debugging much harder.<p>
+
+<p>Writing functional code does not eliminate statefulness and state changes, but isolates and constrains them to make the program easier to reason about.</p>
+
+<p>for example, an if <em>statement</em> in another language becomes an if <em>expression</em> that has returns a value. This makes the language much more composable. We can now use an if expression as an argument to a function!</p>
+
+<p>Really, this is an exercise in minimising mutable state. Clojure's collections are very good at this, and there is a lot of clever things going on below the covers to make immutable state efficient. </p> 
+
+<p>Clojure itself is pragmatic about side effects. It provides the tools to write functional code, but is not dogmatic. It simply makes the functional style the default and most natural way to write programs.</p>
+
+<p>For example, it makes recursion the natural way to express algorithms, rather than side-effect base loopings, and provides a nice syntax for anonymous functions.</p>
+
+<!-- Flipbook example
+immutability: flipbook vs draw+erase example
+Flipbook inneficient -> okasaki functional datastructures -->
+
+<!--there's lots of other topics in this: purity, immutability, recursion, laziness, referential transparency-->
+
+<!--OO is domain as set of nouns
+FP is domain as composition of verbs-->
+
+

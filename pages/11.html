@@ -1,0 +1,26 @@
+<p>Another way in which Clojure is functional first is that functions in Clojure are anonymous by default, and <code>defn</code> is just syntactic sugar which does the same as:</p>
+
+<div class="code">(def name (fn [args] body))</div>
+
+<p>Thiss is where we can start to see the roots of Lisp in Lambda Calculus.</p>
+
+<p>We also have a clean syntax to shorten function definitions even further:</p>
+
+<div class="code">#(...)</div>
+
+<p>This is in fact all you need to be 'Turing Complete' and the entire power of the language lies almost entirely in the ability to manipulate functions like this.</p>
+
+<p>On a more practical note, this syntax is really useful when using higher order functions. (Functions that take functions as arguments). For example, using map to square every number in a sequence:</p>
+
+<div class="code">(map #(* % %) [1 2 3 4 5 6])</div>
+
+<p>We looked at implementing these higher order functions in the Haskell workshop, and the code translates remarkably well. To give you an idea, here is a bare-bones implementation of map:</p> 
+
+<div class="code">(defn simple-map [f coll] 
+  (cons 
+    (f (first coll)) 
+    (map f (rest coll)))</div>
+
+<p>This doesn't handle all edge cases, however. Modify it to handle at least empty lists. </p>
+
+

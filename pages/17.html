@@ -1,0 +1,22 @@
+<h3>A RealWorld(tm) example</h3>
+
+<p>This higher order function is used to serve css with the correct mime type.</p>
+
+<div class="code">
+(defn request-css? [req]
+  (re-find #"\.css" (:uri req)))
+
+(defn reply-css [req root-path] 
+  (let [path (.substring (url-decode (:uri req)) 1)]
+    (content-type 
+      (file-response path {:root root-path :index-files? true})
+      "text/css")))
+
+(defn css-mime-mdlwr [app root-path]
+  (fn [req]
+    (if (request-css? req)
+      (reply-css req root-path)
+      (app req))))
+</code>
+
+

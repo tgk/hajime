@@ -1,0 +1,12 @@
+<h3>Solution: FizzBuzz</h3>
+
+<div class="code">
+(defn fizzbuzz [nums]
+  (doall (map println (map (fn [x] (cond (zero? (mod x 15)) "FizzBuzz" 
+                   (zero? (mod x 5)) "Buzz"
+                   (zero? (mod x 3)) "Fizz"
+         :else x))
+     nums))) nil)
+</div>
+
+

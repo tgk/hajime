@@ -1,16 +1,18 @@
-<h3>What's missing?</h3>
+<h1>1. What makes Lisp Lisp</h1>
+<h2>Historical Detour</h2>
 
-<p>There are several features that would be nice to have but that haven't made it yet:</p>
+<p>I'm actually going to start with a historical detour, first because it's interesting, but also because it's relevant and will illuminate some of the key aspects of Lisp and functional programming in general.</p>
 
-<ul>
-<li>Showing the title of the next and previous step.</li>
-<li>Being able to drill down into the errors from both the REPL and the loaded file</li>
-<li>Highlighting the line that caused an error.</li>
-<li>Being able to change the theme of the editor.</li>
-<li>Being able to save your session for a later date.</li>
-<li>Being able to jump directly to a step in the tutorial.</li>
-<li>Having multiple files opened at once (perhaps in tabs?)</li>
-<li>Seeing the current namespace in the REPL.</li>
-</ul>
+<p>The entire thing actually starts in the 1600s with mathematicians who wore outrageous wigs. But to keep things brief, we'll start our story in 1928 when <a href="http://en.wikipedia.org/wiki/David_Hilbert">David Hilbert</a> poses the 'Entscheidungsproblem'. It asks, according to wikipedia "... whether a given statement is provable from the axioms using the rules of logic".</p>
 
-<p></p>
+<p>This is pretty heady stuff! At this point we're really still at the blurry edge where Mathematics and Philosophy rub elbows, and two mathematicians are about to lay down the foundation to the craft of programming.</p>
+
+<p>To even begin to answer the problem, the notion of 'algorithm' has to be formally defined, and in 1936 both <a href="http://en.wikipedia.org/wiki/Alonzo_Church">Alonzo Church</a> and <a href="http://en.wikipedia.org/wiki/Alan_Turing">Alan Turing</a> independently come up with their own answers to the problem.</p>
+
+<p>Turing's answer is based on what quickly becomes known as 'the Turing machine'. A relatively simple construct that is still capable of describing any possible computation. </p>
+
+<p>Church's answer is much more mathematical, and relies on a formal system he creates for the purpose. This system is Lambda calculus. Lambda calculus is also general, but instead of dealing with the mutation of a tape in a machine it deals with the composition of functions.</p>
+
+<p>We then had two equivalent models of computation, driven by two incredibly talented mathematicians, both at Princeton. The future of computation hung in the balance and could go either way. </p> 
+
+

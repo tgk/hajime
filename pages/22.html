@@ -1,0 +1,103 @@
+<h3>2.2. Built for concurrency</h3>
+
+<!--http://www.infoq.com/presentations/Concurrency-Clojure-->
+
+<!--
+### Vars - like in others, thread isolated. but we'll skip over some of the intricacies.
+mutability within a thread. reference. 
+
+#### Refs -sharing state between threads in synchronous coordinated
+This is the STM you might have heard about. Essentially behind the scenes, clojure runs its memory like a git tree. (remember it's all immutable.)
+
+(Transaction with dosync )
+
+http://clojure.org/Refs
+-->
+
+<p>Agents - states between threads in asynchronous, independent manner</p>
+<!-- Agents Kick ass. it's a shame they don't make it in most tutorials. 
+http://clojure.org/agents
+
+Clojure agents are basically magic.
+-->
+<p>Clojure agents reverses the usual idea. Agents in clojure wrap around value. You send functions to them to change the value. the value referenced by the agent gets updated by the function atomically behind the scenes.</p>
+
+<p>This guarantees a consistent view for users. The flexibility comes because the the function can be anything which is far most powerful than the usual agent systems</p>
+
+<!-- more advanced: validation fn, change listeners)
+
+the value can be accessed at any time by anyone, without cost, plays well with STM and dosync.
+
+#### Atoms - shared synchronous independent
+
+(atom foo)
+
+get the state with 
+
+(deref foo) or @foo
+
+ by using swap 
+
+A great example of atoms is the memoizing higher order function. 
+
+(defn memoize [f]
+  (let [mem (atom {})]
+    (fn [& args]
+      (if-let [e (find @mem args)]
+        (val e)
+        (let [ret (apply f args)]
+          (swap! mem assoc args ret)
+          ret)))))
+ 
+(defn fib [n]
+  (if (<= n 1)
+    n
+    (+ (fib (dec n)) (fib (- n 2)))))
+ 
+(time (fib 35))
+user=> "Elapsed time: 941.445 msecs"
+ 
+(def fib (memoize fib))
+ 
+(time (fib 35))
+ 
+user=> "Elapsed time: 0.044 msecs"
+
+<h3></h3>
+
+
+<h2>In CLosing</h2>
+
+What we haven't mentioned:
+ * clojure runs in your browser: clojurescript
+ * it runs on the CLR
+ * namespaces
+ * metadata
+ * 
+ <h2>Further Resources</h2>
+ <h3>Videos</h3>
+http://www.youtube.com/watch?v=Aoeav_T1ARU
+ * http://vimeo.com/channels/fulldisclojure/
+ * http://www.youtube.com/user/clojuretv
+ http://rubymanor.org/3/videos/programming_with_nothing/ tom stuart lambda calculus
+ <h3>Tutorials and excercises</h3>
+http://java.ociweb.com/mark/clojure/article.html#Intro
+https://github.com/functional-koans/clojure-koans
+http://www.4clojure.com/problems
+ <h3>Books</h3>
+ The joy of clojure
+ programming clojure
+ Clojure programming
+ On Lisp
+ Functional Datastructures
+ Understanding Computation
+ The Annotated Turing
+ SCIP
+ <h3>Resources</h3>
+http://clojuredocs.org/
+Test frameworks exist: clojure.test Midje
+
+
+<h2>Credits</h2>
+
+

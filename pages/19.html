@@ -1,0 +1,11 @@
+
+<p>Because macros do not evaluate their arguments the way functions do, we can use them to solve this problem. So, for unless what we want is</p>
+
+<code>(unless expr form) -> (if expr nil form)</code>
+
+<div class="code">
+(defmacro unless [expr form]
+  (list 'if expr nil form))
+</div>
+
+

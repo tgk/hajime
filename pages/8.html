@@ -1,0 +1,35 @@
+<h3>Excercise: Fibonacci numbers</h3>
+<p>For our first excercise, we'll tackle the classic Fibonacci numbers. We'll eventually return to this problem and make our approach much more efficient without changing our code. But first, we will solve it without worrying about efficiency.</p>
+
+<p>The mathematical definition of Fibonacci numbers is as follows:</p>
+
+<p>F<sub>n</sub>=F<sub>n-1</sub>+F<sub>n-2</sub></p>
+
+<p>With seed values F<sub>0</sub>=0 and F<sub>1</sub>=1</p>
+
+<p>You must complete the function below by replacing '_' with the appropriate form:</p>
+
+<div class="code">(defn fib [n]
+  _)</div>
+
+<p>You can use the following to test your solution:</p>
+
+<div class="code">(def fib-tests `[
+  (1 1)
+  (2 1)
+  (12 144)
+  (13 233)
+  (25 75025)
+])
+
+(defn is-fib? [func]
+  "Does my argument behave as we expect the fibonacci function to?"
+  (let [tests fib-tests
+       got (map func (map first tests))
+       expected (map second tests)
+       same (map #(= (first %) (second %)) (map vector got expected))]
+    (every? identity same)))</div>
+
+<p>Which you can use by running <code>(is-fib? fib)</code>.</p>
+
+

@@ -1,0 +1,35 @@
+
+<h3>Lisp has macros</h3>
+<!--
+technically, this isn't neccessary, but it would be very strange for this not be in a lisp...
+-->
+<p>It's a bit strange to introduce the topic so early, but this is just about planting the seed that will grow into something else.</p> 
+
+<p>Macros are read-time code transformations.</p>
+
+<p>Macros take in a list representing the code and return a list representing the transformed code.</p>
+
+<p>What macros are actually useful for is to add new constructs to the language.</p>
+
+<p>Unlike in other languages, if a feature is missing, you have the power to add it.</p> 
+
+<p>Let's imagine we want to write an 'unless' (this is a typical macro example)</p>
+
+<p>We could try writing </p>
+
+<div class="code">
+; this will fail
+(defn unless [condition form]
+  (if expr nil form))
+</div>
+
+<p>Why don't you try it to see the problem</p>
+
+<div class="code">
+(unless false (prn "should print"))
+(unless true (prn "should not print"))
+</div>
+
+<p>Why is this going wrong? </p>
+
+
