@@ -9,9 +9,16 @@
   (conj secure-tester-without-def (blanket "hajime" "noir")))
 
 (defn make-sandbox []
-  (sandbox [] ; this is a ridiculously open sandbox... 
+  (sandbox [] ; this is a ridiculously open sandbox...
            :timeout 3000
            :init '(do (require '[clojure.repl :refer [doc source]])
+                      (def gimme {:foo "(defne counto
+  [l n]
+  ([[] 0])
+   ([(h . t) _]
+     (fresh [m]
+            (fd/+ m 1 n)
+            (counto t m))))"})
                       (future (Thread/sleep 10800000)
                               (-> *ns* .getName remove-ns)))))
 
@@ -34,10 +41,9 @@
   "returns a map: {:error 'description'} or {:success 'loaded file correctly'}"
   (try
     (sandbox `(load-string ~str))
-    (catch Exception e 
+    (catch Exception e
       (throw e)))
   {:success 1})
-
 
 (defn eval-request [expr]
   (try
@@ -55,5 +61,5 @@
       {:error true :message "Execution Timed Out!"})
     (catch Exception e
       {:error true :message (str (root-cause e))})
-    (catch clojure.lang.Compiler$CompilerException e 
+    (catch clojure.lang.Compiler$CompilerException e
       {:error true :message (str (root-cause e)) :line (. e line)})))

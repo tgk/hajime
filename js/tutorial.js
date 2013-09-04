@@ -95,6 +95,7 @@ $(function(){
         window.mainEditor.savefile();
       });
       $(this).append(link);
+      $(this).append($('<div>').addClass('clear'));
     });
   }
 
