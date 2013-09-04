@@ -82,8 +82,10 @@ function pollTeacherfile() {
     type: "GET",
     url: "/teacherfile.json",
     success: function(res) {
+       // Move this stuff to the controller
        if (res != window.teacherfileEditor.getValue()) {
           window.teacherfileEditor.setValue(res);
+          window.teacherfileEditor.setReadOnly(true);
       }
      }
   });
