@@ -1,7 +1,7 @@
 $(function(){
   window.currentPage = 0;
   window.lastPage = false;
-  
+
   function styleButtons(){
     $.each($(".navbut"), function(){
       $(this).removeClass("active");
@@ -33,7 +33,7 @@ $(function(){
   }
 
   loadPage(window.currentPage);
-  
+
   function nextPage(){
     var np = window.currentPage+1;
     console.log("next page. "+window.currentPage+"->"+np);
@@ -42,11 +42,11 @@ $(function(){
 
 
   function prevPage(){
-    var pp = window.currentPage -1; 
-    console.log("prev page. "+window.currentPage+"->"+pp); 
+    var pp = window.currentPage -1;
+    console.log("prev page. "+window.currentPage+"->"+pp);
     loadPage(window.currentPage - 1);
   }
-  
+
   $("#next").click(function(){
     if($("#next").hasClass('active')){
       nextPage();
@@ -68,6 +68,8 @@ $(function(){
         editor.resize();
     };
 
+  var codeCount = 0;
+
     // Set initial size to match initial content
   /* Prettifies the any code class inside the tutorial by wrapping it in an ace editor*/
   function prettifyCode(){
@@ -76,7 +78,7 @@ $(function(){
       $(this).empty();
       $(this).append(ae);
       var myeditor = ace.edit(ae.get(0));
-     
+
       myeditor.setTheme("ace/theme/crimson_editor");
       myeditor.setHighlightActiveLine(false);
       myeditor.setReadOnly(true);
@@ -86,14 +88,13 @@ $(function(){
       myeditor.getSession().setUseSoftTabs(true);
       ae.css('fontSize', '20px');
       heightUpdateFunction(ae, myeditor);
-      var link = $('<a>').addClass('loadlink').text("add to session").click(function(){
+      codeCount++;
+      var link = $('<a>').addClass('loadlink').text(codeCount).click(function(){
         var session = window.mainEditor.getSession()
         session.insert({row:session.getLength()}, "\n\n"+myeditor.getValue());
-        window.mainEditor.savefile(); 
+        window.mainEditor.savefile();
       });
       $(this).append(link);
-      $(this).append($('<div>').addClass('clear'));
-      
     });
   }
 
