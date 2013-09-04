@@ -3,20 +3,20 @@
 
   <head>
     <link href="/css/style.css" rel="stylesheet" type="text/css">
-    
+
     <script src="js/jquery-1.7.2.min.js" type="text/javascript"></script>
-    
+
     <script src="/js/jquery-console/jquery.console.js" type="text/javascript"></script>
     <script src="/js/splitter.js" type="text/javascript"></script>
     <!--
     In the future, might be worth moving to https://github.com/replit/jq-console
-    --> 
+    -->
     <script src="/js/ace-builds/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
-    
+
     <script src="/js/console.js" type="text/javascript"></script>
     <script src="/js/mousetrap.js" type="text/javascript"></script>
     <script>
-    
+
     /*
      * Set up the resizable panes
      */
@@ -29,9 +29,9 @@
       $("#rightpane").splitter({
         splitHorizontal:true,
         sizeTop:true
-      }); 
+      });
     });
-    
+
 
     /*
      * Set up editor
@@ -41,47 +41,57 @@
       window.mainEditor = editor;
       editor.setTheme("ace/theme/clouds_midnight");
       editor.setHighlightActiveLine(false);
-      
+
       editor.getSession().setMode("ace/mode/clojure");
       editor.getSession().setTabSize(2);
       editor.getSession().setUseSoftTabs(true);
-      
-      document.getElementById('editor').style.fontSize='18px';
-      
-      $("#editor").resize(function() { 
-        editor.resize();
-      });  
 
-      $(window).resize(function() { 
+      document.getElementById('editor').style.fontSize='18px';
+
+      var teacherfile = ace.edit("teacherfile");
+      window.teacherfileEditor = teacherfile;
+      teacherfile.setTheme("ace/theme/clouds_midnight");
+      teacherfile.setHighlightActiveLine(false);
+      teacherfile.getSession().setMode("ace/mode/clojure");
+      teacherfile.getSession().setTabSize(2);
+      teacherfile.getSession().setUseSoftTabs(true);
+      document.getElementById('teacherfile').style.fontSize='18px';
+
+
+      $("#editor").resize(function() {
+        editor.resize();
+      });
+
+      $(window).resize(function() {
         $("#container").trigger("resize")
-      });  
-      
+      });
+
       function savefile(){
-        $("#menu-save").css('background-color', 'yellow'); 
+        $("#menu-save").css('background-color', 'yellow');
         $("#menu-save").text("Saving");
         result = load_str(editor.getValue());
         if(result.success){
-          $("#menu-save").css('background-color', 'green'); 
+          $("#menu-save").css('background-color', 'green');
           $("#menu-save").text("Saved");
           $("#errormsg").fadeOut(500);
 
         }else{
-          $("#menu-save").css('background-color', 'red'); 
+          $("#menu-save").css('background-color', 'red');
           $("#menu-save").text("Error");
           console.log(result);
           $("#errormsg").text(result.message);
           $("#errormsg").show();
-          
+
         }
       }
       $("#menu-save").click(function(){
-        savefile(); 
+        savefile();
       });
       $("#console").focusin(function(){
         savefile();
       });
       editor.on("change", function(){
-        $("#menu-save").css('background-color', 'grey'); 
+        $("#menu-save").css('background-color', 'grey');
         $("#menu-save").text("Modified");
       });
       editor.savefile = savefile;
@@ -90,7 +100,7 @@
     <script src="/js/tutorial.js" type="text/javascript"></script>
     <title>Clojure Workshop</title>
   </head>
-  
+
   <body>
       <div id="menu">
         <span id="errormsg"></span>
@@ -101,12 +111,13 @@
           <div id="tutorial">
             <p>Hello tutorial!</p>
           </div>
+          <div class="editor" id="teacherfile"></div>
           <a id="prev" class="navbut">&lArr;</a>
           <a id="next" class="navbut">&rArr;</a>
         </div>
         <div id="rightpane">
           <div class="editor" id="editor">
-(defn hello [name] 
+(defn hello [name]
     (println (format "Hello, %s!" name)))</div>
           <div class="console" id="console"></div>
         </div>

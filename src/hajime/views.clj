@@ -16,7 +16,7 @@
                  (let [[out res] result]
                    {:expr (pr-str expr)
                     :result (str out (pr-str res))}))]
-    
+
       (if jsonp
         (resp/jsonp jsonp data)
         (resp/json data)))
@@ -24,12 +24,21 @@
         (resp/jsonp jsonp {:error true :message "No expression sent!"})
         (resp/json {:error true :message "No expression sent!"}))))
 
-(defpage [:post "/execfile.json"] {:keys [expr jsonp]}
+(def teacher-file (atom ""))
+
+(defpage [:post "/execfile.json"] {:keys [expr jsonp teacher]}
   (if expr
     (let [{:keys [error message line success] :as result} (eval-file expr)]
+      (when (= teacher "true")
+        (reset! teacher-file expr))
       (if jsonp
         (resp/jsonp jsonp result)
         (resp/json result)))
     (if jsonp
       (resp/jsonp jsonp {:error true :message "No expression sent!"} )
       (resp/json {:error true :message "No expression sent!"}))))
+
+(defpage [:get "/teacherfile.json"] {:keys [jsonp]}
+  (if jsonp
+    (resp/jsonp jsonp @teacher-file)
+    (resp/json @teacher-file)))

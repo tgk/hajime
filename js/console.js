@@ -4,13 +4,12 @@ function query_sandbox(url, code) {
   $.ajax({
     type: "POST",
     url:url,
-    data: { expr : code },
+    data: { expr : code, teacher : ((window.teacher == true) ? true : false) },
     async:false,
     success: function(res) { data = res; },
   });
   return data;
 }
-
 
 function load_str(code) {
   return query_sandbox("execfile.json", code)
@@ -35,18 +34,18 @@ function onValidate(input) {
 
 function matchCommand(input){
   switch(input){
-    case "(reset)": 
+    case "(reset)":
       return function(){
         controller.reset();
-      }
+      };
   }
 }
 
 function onHandle(line, report) {
     var input = $.trim(line);
-    
+
     commandCB = matchCommand(input);
-  
+
     if (commandCB){
       return commandCB();
     }else{
@@ -78,6 +77,19 @@ function changerUpdated() {
     });
 }
 
+function pollTeacherfile() {
+  $.ajax({
+    type: "GET",
+    url: "/teacherfile.json",
+    success: function(res) {
+       if (res != window.teacherfileEditor.getValue()) {
+          window.teacherfileEditor.setValue(res);
+      }
+     }
+  });
+  setTimeout(pollTeacherfile, 3000);
+}
+
 var controller;
 
 $(document).ready(function() {
@@ -90,4 +102,5 @@ $(document).ready(function() {
         promptHistory:true
     });
     changerUpdated();
+    pollTeacherfile();
 });

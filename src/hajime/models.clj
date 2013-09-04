@@ -12,13 +12,6 @@
   (sandbox [] ; this is a ridiculously open sandbox...
            :timeout 3000
            :init '(do (require '[clojure.repl :refer [doc source]])
-                      (def gimme {:foo "(defne counto
-  [l n]
-  ([[] 0])
-   ([(h . t) _]
-     (fresh [m]
-            (fd/+ m 1 n)
-            (counto t m))))"})
                       (future (Thread/sleep 10800000)
                               (-> *ns* .getName remove-ns)))))
 

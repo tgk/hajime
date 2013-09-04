@@ -50,8 +50,8 @@ html, body{
 }
 #tutorialPane{
   font-family: 'Armata', sans-serif;
-  min-width:50px;
-  max-width:50px;
+  min-width:500px;
+  max-width:800px;
   color:#f4ffff;
   background: #161616;
   overflow:auto;
@@ -63,6 +63,9 @@ html, body{
   height:100%;
 }
 #editor{
+  min-height:60%;
+}
+#teacherfile{
   min-height:60%;
 }
 #errormsg{
