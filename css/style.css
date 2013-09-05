@@ -55,7 +55,6 @@ html, body{
   color:#f4ffff;
   background: #161616;
   overflow:auto;
-  padding:20px;
   font-size:110%;
 }
 #rightpane{
@@ -66,7 +65,7 @@ html, body{
   min-height:60%;
 }
 #teacherfile{
-  min-height:60%;
+  min-height:100%;
 }
 #errormsg{
   padding:3px;
