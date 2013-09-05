@@ -12,6 +12,8 @@
   (sandbox [] ; this is a ridiculously open sandbox...
            :timeout 3000
            :init '(do (require '[clojure.repl :refer [doc source]])
+                      (refer-clojure :exclude [==])
+                      (require '[clojure.core.logic :refer :all])
                       (future (Thread/sleep 10800000)
                               (-> *ns* .getName remove-ns)))))
 
