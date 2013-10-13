@@ -39,23 +39,25 @@
     $().ready(function() {
       var editor = ace.edit("editor");
       window.mainEditor = editor;
-      editor.setTheme("ace/theme/clouds_midnight");
+      editor.setTheme("ace/theme/clouds");
+      // editor.setTheme("ace/theme/chrome");
+      // editor.setTheme("ace/theme/tomorrow");
       editor.setHighlightActiveLine(false);
 
       editor.getSession().setMode("ace/mode/clojure");
       editor.getSession().setTabSize(2);
       editor.getSession().setUseSoftTabs(true);
 
-      document.getElementById('editor').style.fontSize='18px';
+      document.getElementById('editor').style.fontSize='14px';
 
       var teacherfile = ace.edit("teacherfile");
       window.teacherfileEditor = teacherfile;
-      teacherfile.setTheme("ace/theme/clouds_midnight");
+      teacherfile.setTheme("ace/theme/clouds");
       teacherfile.setHighlightActiveLine(false);
       teacherfile.getSession().setMode("ace/mode/clojure");
       teacherfile.getSession().setTabSize(2);
       teacherfile.getSession().setUseSoftTabs(true);
-      document.getElementById('teacherfile').style.fontSize='18px';
+      document.getElementById('teacherfile').style.fontSize='14px';
 
 
       $("#editor").resize(function() {
