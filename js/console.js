@@ -1,4 +1,3 @@
-
 function query_sandbox(url, code) {
   var data = {};
   $.ajax({
@@ -86,6 +85,7 @@ function pollTeacherfile() {
        if (res != window.teacherfileEditor.getValue()) {
           window.teacherfileEditor.setValue(res);
           window.teacherfileEditor.setReadOnly(true);
+          window.teacherfileEditor.clearSelection();
       }
      }
   });
